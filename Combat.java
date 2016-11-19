@@ -1,5 +1,6 @@
 import java.util.Random;
 
+
 public class Combat {
 
     private Boolean didUserWinCombat;
@@ -10,6 +11,8 @@ public class Combat {
     private Double userRemainingHealth;
     private Double enemyRemainingHealth;
 
+    private Double resetUserHealth;
+
     Combat(Fighter userFighter, Fighter enemyFighter){
         this.userFighter = userFighter;
         this.enemyFighter = enemyFighter;
@@ -17,10 +20,12 @@ public class Combat {
 
     public Boolean fight(){
         isCombatOngoing = true;
+        resetUserHealth = userFighter.getHealth();
         while(isCombatOngoing){
             nextTurn();
             checkForCombatEnd();
         }
+        userFighter.setHealth(resetUserHealth);
         return didUserWinCombat;
     }
 
@@ -29,14 +34,16 @@ public class Combat {
             isCombatOngoing = false;
             didUserWinCombat = true;
         }
-        if(userFighter.getHealth() <= 0){
+        else if(userFighter.getHealth() <= 0){
             isCombatOngoing = false;
             didUserWinCombat = false;
         }
     }
 
     private Double attack(Double attackerAttack, Double DefenderHealth) {
-        return DefenderHealth - (attackerAttack * Math.random());
+        TypeAdvantage typeAdvantageCalculator = new TypeAdvantage(userFighter.getGeneType(), enemyFighter.getGeneType());
+        Double damage = (attackerAttack * Math.random()) * typeAdvantageCalculator.calculateTypeAdvantage();
+        return DefenderHealth - damage;
     }
 
     private void nextTurn(){
