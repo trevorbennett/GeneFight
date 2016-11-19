@@ -1,5 +1,3 @@
-
-
 public final class main {
 
 
@@ -16,7 +14,8 @@ public final class main {
             if(continueCombat) {
                 victories++;
             } else {
-                System.out.print("The winner had " + enemyFighter.getAttack() + " attack! \n");
+                System.out.print("The winner had " + enemyFighter.getAttack() + " attack and was "
+                + enemyFighter.getGeneType().toString() + " type! \n");
             }
         }
         System.out.print(victories);
