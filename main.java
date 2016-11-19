@@ -1,42 +1,34 @@
-import java.util.Scanner;
 
-/**
- * Simple HelloWorld program (clear of Checkstyle and FindBugs warnings).
- *
- * @author P. Bucci
- */
+
 public final class main {
 
-    /**
-     * Default constructor--private to prevent instantiation.
-     */
-    private main() {
-        // no code needed here
+
+    public static void main(String[] args) {
+        Fighter userFighter = new Fighter();
+        createFighterFromParameters(args, userFighter);
+        Boolean continueCombat = true;
+        Long victories = 0L;
+
+        while(continueCombat){
+            Fighter enemyFighter = FighterUtils.createNewEnemyFighter();
+            Combat combat = new Combat(userFighter, enemyFighter);
+            continueCombat = combat.fight();
+            if(continueCombat) {
+                victories++;
+            } else {
+                System.out.print("The winner had " + enemyFighter.getAttack() + " attack! \n");
+            }
+        }
+        System.out.print(victories);
     }
 
-    /**
-     * Main method.
-     *
-     * @param args
-     *            the command line arguments; unused here
-     */
-    public static void main(String[] args) {
-        Scanner reader = new Scanner(System.in); // Reading from System.in
-
-        double myAttack = reader.nextDouble();
-        TypeOfFighter myType = TypeOfFighter.grass;
-        double myHealth = (Math.pow(100 - myAttack, 2) / (30 + myAttack)) * 10;
-
-        double attackOpponent = Math.round(Math.random() * 100);
-        double healthOpponent = (Math.pow(100 - attackOpponent, 2)
-                / (30 + attackOpponent)) * 10;
-        TypeOfFighter typeOpponent = TypeOfFighter
-                .randomEnum(TypeOfFighter.class);
-
-        System.out.println(attackOpponent);
-        System.out.println(typeOpponent);
-        System.out.println(healthOpponent);
-
+    private static Fighter createFighterFromParameters(String[] args, Fighter userFighter) {
+        String userGeneTypeString = args[0];
+        String userAttack = args[1];
+        userFighter.setGeneType(FighterUtils.determineType(userGeneTypeString));
+        userFighter.setAttack(Double.parseDouble(userAttack));
+        userFighter.setHealth(FighterUtils.calculateHealthBasedOnAttack(Double.parseDouble(userAttack)));
+        return userFighter;
     }
 
 }
