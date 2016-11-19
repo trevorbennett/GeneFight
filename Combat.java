@@ -1,8 +1,5 @@
 import java.util.Random;
 
-/**
- * Created by D532387 on 11/19/2016.
- */
 public class Combat {
 
     private Boolean didUserWinCombat;
