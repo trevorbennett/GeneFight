@@ -1,4 +1,4 @@
-import java.util.Random;
+package genefighter;
 
 
 public class Combat {

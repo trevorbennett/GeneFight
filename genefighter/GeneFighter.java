@@ -1,4 +1,6 @@
-public final class main {
+package genefighter;
+
+public final class GeneFighter {
 
 
     public static void main(String[] args) {
@@ -15,10 +17,9 @@ public final class main {
                 victories++;
             } else {
                 System.out.print("The winner had " + enemyFighter.getAttack() + " attack and was "
-                + enemyFighter.getGeneType().toString() + " type! \n");
+                + enemyFighter.getGeneType().toString() + " type! Your Genefighter won " + victories + " times!\n");
             }
         }
-        System.out.print(victories);
     }
 
     private static Fighter createFighterFromParameters(String[] args, Fighter userFighter) {

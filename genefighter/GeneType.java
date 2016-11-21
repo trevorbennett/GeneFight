@@ -1,4 +1,6 @@
-    public enum GeneType {
+package genefighter;
+
+public enum GeneType {
         FIRE, WATER, GRASS;
 
         public static GeneType getRandom() {

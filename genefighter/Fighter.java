@@ -1,3 +1,5 @@
+package genefighter;
+
 public class Fighter {
 
     GeneType geneType;

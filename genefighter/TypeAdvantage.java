@@ -1,3 +1,7 @@
+package genefighter;
+
+import genefighter.GeneType;
+
 /**
  * Created by D532387 on 11/19/2016.
  */

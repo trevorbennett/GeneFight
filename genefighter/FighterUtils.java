@@ -1,3 +1,4 @@
+package genefighter;
 
 public class FighterUtils {
 
@@ -8,7 +9,7 @@ public class FighterUtils {
     }
 
     public static void generateRandomAttack(Fighter fighter){
-        Double randomAttack = Math.random() * 100;
+        Double randomAttack = Math.floor(Math.random() * 100);
         fighter.setAttack(randomAttack);
     }
     public static void generateRandomType(Fighter fighter){
