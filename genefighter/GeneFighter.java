@@ -4,15 +4,18 @@ public final class GeneFighter {
 
     private static Long victories;
 
-    public static Long geneFight(Fighter userFighter) {
+    public static void geneFight(Fighter userFighter) {
         Fighter enemyFighter = new Fighter();
         fightSeries(userFighter);
-        return victories;
+        userFighter.setFitness(victories);
+
+
     }
 
     private static void fightSeries(Fighter userFighter) {
-        Fighter enemyFighter;
+        Fighter enemyFighter = new Fighter();
         Boolean continueCombat = true;
+        victories = 0L;
 
         while(continueCombat){
             enemyFighter = FighterUtils.createNewFighter();
@@ -21,12 +24,13 @@ public final class GeneFighter {
             if(continueCombat)
                 victories++;
         }
+
+        //             put in genefight for debugging
+        System.out.print("The winner had " + enemyFighter.getAttack() + " attack and was "
+                + enemyFighter.getGeneType().toString() + " type! Your Genefighter won " + victories + " times!\n");
     }
 
 
-    //          put in genefight for debugging
-//        System.out.print("The winner had " + enemyFighter.getAttack() + " attack and was "
-//                + enemyFighter.getGeneType().toString() + " type! Your Genefighter won " + victories + " times!\n");
 
 
 }

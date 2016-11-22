@@ -5,6 +5,11 @@ public class Fighter {
     GeneType geneType;
     Double health;
     Double attack;
+    Long fitness;
+
+    public Long getFitness() {return fitness;}
+
+    public void setFitness(Long fitness) { this.fitness = fitness;}
 
     public GeneType getGeneType() {
         return geneType;

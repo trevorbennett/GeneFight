@@ -8,14 +8,17 @@ import genefighter.GeneFighter;
  */
 public class Main {
     public static final Long POPULATION_COUNT = 4000L;
-
+    public static NaturalSelection naturalSelection;
     public static void main(String[] args) {
 
-        Population initialPopulation = new Population(POPULATION_COUNT);
-        initialPopulation.generatePopulation();
-        for (Fighter populationMember: initialPopulation.getPopulation()) {
+        Population population = new Population(POPULATION_COUNT);
+        population.generatePopulation();
+
+        for (Fighter populationMember: population.getPopulationGroup()) {
             GeneFighter.geneFight(populationMember);
+            naturalSelection.addVictories(populationMember.getFitness());
         }
+
 
     }
 }

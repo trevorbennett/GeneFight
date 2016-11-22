@@ -11,27 +11,31 @@ import java.util.List;
  */
 public class Population {
 
-    private static Long populationCount;
+    private Long populationCount;
+    private List<Fighter> populationGroup;
 
-    public static List<Fighter> getPopulation() {
-        return population;
-    }
-
-    public static void setPopulation(List<Fighter> population) {
-        Population.population = population;
-    }
-
-    private static List<Fighter> population;
 
     Population(Long populationCount){
         this.populationCount = populationCount;
     }
 
+    public Long getPopulationCount() {
+        return populationCount;
+    }
+
     public void generatePopulation(){
-        population = new ArrayList<Fighter>();
+        populationGroup = new ArrayList<Fighter>();
         for(Long i = populationCount; i>0; i--){
-            population.add(FighterUtils.createNewFighter());
+            populationGroup.add(FighterUtils.createNewFighter());
         }
+    }
+
+    public List<Fighter> getPopulationGroup() {
+        return populationGroup;
+    }
+
+    public void setPopulationGroup(List<Fighter> populationGroup) {
+        this.populationGroup = populationGroup;
     }
 
 
