@@ -30,11 +30,20 @@ public class FighterUtils {
         return geneType;
     }
 
-    public static Fighter createNewEnemyFighter() {
+    public static Fighter createNewFighter() {
         Fighter enemyFighter = new Fighter();
         FighterUtils.generateRandomType(enemyFighter);
         FighterUtils.generateRandomAttack(enemyFighter);
         enemyFighter.setHealth(FighterUtils.calculateHealthBasedOnAttack(enemyFighter.getAttack()));
         return enemyFighter;
+    }
+
+    private static Fighter createFighterFromParameters(String[] args, Fighter userFighter) {
+        String userGeneTypeString = args[0];
+        String userAttack = args[1];
+        userFighter.setGeneType(FighterUtils.determineType(userGeneTypeString));
+        userFighter.setAttack(Double.parseDouble(userAttack));
+        userFighter.setHealth(FighterUtils.calculateHealthBasedOnAttack(Double.parseDouble(userAttack)));
+        return userFighter;
     }
 }
