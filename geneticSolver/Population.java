@@ -38,5 +38,8 @@ public class Population {
         this.populationGroup = populationGroup;
     }
 
-
+    public Fighter getRandomPopulationMember(){
+        return populationGroup.get( (int)
+                (Math.random()*populationGroup.size()));
+    }
 }

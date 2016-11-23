@@ -1,6 +1,10 @@
 package geneticSolver;
 
 import genefighter.Fighter;
+import genefighter.FighterUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Trevor on 11/22/2016.
@@ -14,14 +18,52 @@ public class NaturalSelection {
         populationCount = currentGeneration.getPopulationCount();
         Population newGeneration = new Population(populationCount);
 
-        cullHerd(currentGeneration);
-
+        killUnfitPopulation(currentGeneration);
+        breedNewGeneration(currentGeneration, newGeneration);
 
 
         return newGeneration;
     }
 
-    public static void cullHerd(Population currentGeneration){
+    private static void breedNewGeneration(Population currentGeneration, Population newGeneration) {
+        List<Fighter> newPopulation = new ArrayList<Fighter>();
+
+        for (Fighter populationMember: currentGeneration.getPopulationGroup()) {
+            Fighter randomBiasedChild = GenerateChildByAlphaParentBiasedGeneticCrossover(populationMember, currentGeneration.getRandomPopulationMember());
+            Fighter parentBiasedChild = GenerateChildByRandomSinglePointGeneticCrossover(populationMember, currentGeneration.getRandomPopulationMember());
+            newPopulation.add(randomBiasedChild);
+            newPopulation.add(parentBiasedChild);
+        }
+        newGeneration.setPopulationGroup(newPopulation);
+    }
+
+    private static Fighter GenerateChildByRandomSinglePointGeneticCrossover(Fighter alphaParent, Fighter betaParent) {
+        Fighter child = new Fighter();
+        Double attack = (alphaParent.getAttack() * .75) + (betaParent.getAttack() *.25);
+        child.setGeneType(alphaParent.getGeneType());
+        child.setAttack(attack);
+        child.setHealth(FighterUtils.calculateHealthBasedOnAttack(attack));
+        return child;
+    }
+
+    private static Fighter GenerateChildByAlphaParentBiasedGeneticCrossover(Fighter alphaParent, Fighter betaParent) {
+        Fighter child = new Fighter();
+        Double attack = (alphaParent.getAttack() * .5) + (betaParent.getAttack() *.5);
+        Boolean isTypeOfAlphaParent = Math.random() < 0.5;
+        if(isTypeOfAlphaParent) {
+            child.setGeneType(alphaParent.getGeneType());
+        } else {
+            child.setGeneType(betaParent.getGeneType());
+        }
+        child.setAttack(attack);
+        child.setHealth(FighterUtils.calculateHealthBasedOnAttack(attack));
+        return child;
+    }
+
+
+
+
+    public static void killUnfitPopulation(Population currentGeneration){
 
         for (Fighter populationMember: currentGeneration.getPopulationGroup()) {
             if(populationMember.getFitness() < (fitnessThreshold / populationCount)){
