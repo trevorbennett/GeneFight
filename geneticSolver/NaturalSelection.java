@@ -20,9 +20,25 @@ public class NaturalSelection {
 
         killUnfitPopulation(currentGeneration);
         breedNewGeneration(currentGeneration, newGeneration);
-
+        mutateNewGeneration(newGeneration);
 
         return newGeneration;
+    }
+
+    private static void mutateNewGeneration(Population newGeneration) {
+        for (Fighter populationMember: newGeneration.getPopulationGroup()) {
+            Boolean willTypeMutate = (Math.random() * 10) >= 8.5;
+            Boolean willAttackMutate = (Math.random() * 10) >= 8.99;
+
+            if (willTypeMutate) {
+                FighterUtils.generateRandomType(populationMember);
+            }
+            if (willAttackMutate) {
+                FighterUtils.generateRandomAttack(populationMember);
+            }
+
+        }
+
     }
 
     private static void breedNewGeneration(Population currentGeneration, Population newGeneration) {
