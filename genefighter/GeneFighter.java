@@ -7,9 +7,6 @@ public final class GeneFighter {
     public static void geneFight(Fighter userFighter) {
         Fighter enemyFighter = new Fighter();
         fightSeries(userFighter);
-        userFighter.setFitness(victories);
-
-
     }
 
     private static void fightSeries(Fighter userFighter) {
@@ -24,10 +21,13 @@ public final class GeneFighter {
             if(continueCombat)
                 victories++;
         }
+        userFighter.setFitness(victories);
 
-        //             put in genefight for debugging
+   //                  put in genefight for debugging
         System.out.print("The winner had " + enemyFighter.getAttack() + " attack and was "
                 + enemyFighter.getGeneType().toString() + " type! Your Genefighter won " + victories + " times!\n");
+        System.out.print("Your genefighter had " + userFighter.getAttack() + " attack and was "
+                + userFighter.getGeneType().toString() + " type! Your Genefighter won " + victories + " times!\n");
     }
 
 

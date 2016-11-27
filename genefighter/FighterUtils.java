@@ -12,6 +12,11 @@ public class FighterUtils {
         Double randomAttack = Math.floor(Math.random() * 100);
         fighter.setAttack(randomAttack);
     }
+
+    public static void generateRandomAttackAndHealth(Fighter fighter){
+        generateRandomAttack(fighter);
+        fighter.setHealth(calculateHealthBasedOnAttack(fighter.getAttack()));
+    }
     public static void generateRandomType(Fighter fighter){
         fighter.setGeneType(GeneType.getRandom());
     }
@@ -31,11 +36,10 @@ public class FighterUtils {
     }
 
     public static Fighter createNewFighter() {
-        Fighter enemyFighter = new Fighter();
-        FighterUtils.generateRandomType(enemyFighter);
-        FighterUtils.generateRandomAttack(enemyFighter);
-        enemyFighter.setHealth(FighterUtils.calculateHealthBasedOnAttack(enemyFighter.getAttack()));
-        return enemyFighter;
+        Fighter fighter = new Fighter();
+        FighterUtils.generateRandomType(fighter);
+        FighterUtils.generateRandomAttackAndHealth(fighter);
+        return fighter;
     }
 
     private static Fighter createFighterFromParameters(String[] args, Fighter userFighter) {

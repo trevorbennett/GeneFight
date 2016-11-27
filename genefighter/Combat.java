@@ -42,7 +42,7 @@ public class Combat {
 
     private Double attack(Double attackerAttack, Double DefenderHealth) {
         TypeAdvantage typeAdvantageCalculator = new TypeAdvantage(userFighter.getGeneType(), enemyFighter.getGeneType());
-        Double damage = (attackerAttack * Math.random()) * typeAdvantageCalculator.calculateTypeAdvantage();
+        Double damage = (attackerAttack * Math.random()) * typeAdvantageCalculator.calculateTypeAdvantage() + 1;
         return DefenderHealth - damage;
     }
 

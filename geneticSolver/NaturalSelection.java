@@ -4,6 +4,7 @@ import genefighter.Fighter;
 import genefighter.FighterUtils;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -18,23 +19,30 @@ public class NaturalSelection {
         populationCount = currentGeneration.getPopulationCount();
         Population newGeneration = new Population(populationCount);
 
+        System.out.print("victories in generation: " + fitnessThreshold + "\n");
+
         killUnfitPopulation(currentGeneration);
         breedNewGeneration(currentGeneration, newGeneration);
         mutateNewGeneration(newGeneration);
 
+        resetFitnessThreshold();
         return newGeneration;
+    }
+
+    public static void resetFitnessThreshold() {
+        fitnessThreshold = 0L;
     }
 
     private static void mutateNewGeneration(Population newGeneration) {
         for (Fighter populationMember: newGeneration.getPopulationGroup()) {
-            Boolean willTypeMutate = (Math.random() * 10) >= 8.5;
-            Boolean willAttackMutate = (Math.random() * 10) >= 8.99;
+            Boolean willTypeMutate = (Math.random() * 10) >= 8.5;  //10% + 5% for 1/3 chance that mutate arrives at same result
+            Boolean willAttackMutate = (Math.random() * 10) >= 8.99; //10% + .1% for the 1/100 chance that mutate arrives at same result
 
             if (willTypeMutate) {
                 FighterUtils.generateRandomType(populationMember);
             }
             if (willAttackMutate) {
-                FighterUtils.generateRandomAttack(populationMember);
+                FighterUtils.generateRandomAttackAndHealth(populationMember);
             }
 
         }
@@ -53,7 +61,7 @@ public class NaturalSelection {
         newGeneration.setPopulationGroup(newPopulation);
     }
 
-    private static Fighter GenerateChildByRandomSinglePointGeneticCrossover(Fighter alphaParent, Fighter betaParent) {
+    private static Fighter GenerateChildByAlphaParentBiasedGeneticCrossover(Fighter alphaParent, Fighter betaParent) {
         Fighter child = new Fighter();
         Double attack = (alphaParent.getAttack() * .75) + (betaParent.getAttack() *.25);
         child.setGeneType(alphaParent.getGeneType());
@@ -62,7 +70,7 @@ public class NaturalSelection {
         return child;
     }
 
-    private static Fighter GenerateChildByAlphaParentBiasedGeneticCrossover(Fighter alphaParent, Fighter betaParent) {
+    private static Fighter GenerateChildByRandomSinglePointGeneticCrossover(Fighter alphaParent, Fighter betaParent) {
         Fighter child = new Fighter();
         Double attack = (alphaParent.getAttack() * .5) + (betaParent.getAttack() *.5);
         Boolean isTypeOfAlphaParent = Math.random() < 0.5;
@@ -79,19 +87,18 @@ public class NaturalSelection {
 
 
 
-    public static void killUnfitPopulation(Population currentGeneration){
+    private static void killUnfitPopulation(Population currentGeneration){
+        Iterator<Fighter> populationIterator = currentGeneration.getPopulationGroup().iterator();
 
-        for (Fighter populationMember: currentGeneration.getPopulationGroup()) {
+        while (populationIterator.hasNext()) {
+            Fighter populationMember = populationIterator.next();
             if(populationMember.getFitness() < (fitnessThreshold / populationCount)){
-                currentGeneration.getPopulationGroup().remove(populationMember);
+                populationIterator.remove();
             }
         }
     }
 
-    public void addVictories(Long additionalVictories){fitnessThreshold += additionalVictories;}
+    public static void addVictories(Long additionalVictories){fitnessThreshold += additionalVictories;}
 
-    public Long getVictories(){return fitnessThreshold;}
-
-    public void clearVictories(){fitnessThreshold = 0L;}
 
 }
