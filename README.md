@@ -6,7 +6,7 @@ Genefight is a simple example of a genetic algolrithm at work, with the goal of 
 
 A genefighter is sort of like a simplied version of a pokemon. It has three interlinked attributes, called type, attack, and health. The meanings of these attributes are as follows:
 
-Attack - A random number between 0-100. Each singular attack in a round of combat is a random damage value from (0 - attack)
+Attack - A random number between 0-100. Each singular attack in a round of combat is a random damage value from (1 - attack + 1)
 
 Health - A value given by the formula (100-attack)^2/(30+attack) * 10, which gives health a range of (0 - 3,333)
 
@@ -25,3 +25,7 @@ In addition, fire attacks deal double damage to grass, water attacks deal double
 ## So what's the goal of all this?
 
 The goal is to determine the best genefighter. The problem is sufficiently complex enough that random guessing of type type and attack will not produce an intuitive optimal solution, and since the field of solution sets produces a series of local maxmiums with no way of guarenteeing an absolute maximum, the problem is suitable to be solved via a genetic algorithm.
+
+## Preliminary results
+
+After running 1000 generations, one can see that the results of the algorithm  converge around an attack of 22, and that there is no strong type bias for any attack. I believe the latter to be true based on the fact that type advantage is so overwhelming.
